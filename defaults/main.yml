@@ -1,0 +1,21 @@
+---
+# filebeat installation vars
+filebeat_version: 7.7.1
+filebeat_install_rpm_url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ filebeat_version }}-x86_64.rpm
+filebeat_install_rpm_dest: "/tmp"
+
+# filebeat logstash configuration
+filebeat_logstash_output_enabled: true
+filebeat_logstash_hosts:
+  - "http://{{ inventory_hostname }}:9600"
+
+# filebeat main files, dirs
+filebeat_config_file: "{{ filebeat_config_dir }}/filebeat.yml"
+filebeat_home: "/usr/share/filebeat"
+filebeat_config_dir: "/etc/filebeat"
+filebeat_data_dir: "/var/lib/filebeat"
+filebeat_log_dir: "/var/log/filebeat"
+filebeat_sysd_script: "/etc/systemd/system/filebeat.service"
+
+# filebeat logging vars
+filebeat_logging_level: debug

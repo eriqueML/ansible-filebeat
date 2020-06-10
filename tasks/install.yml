@@ -1,0 +1,11 @@
+---
+- name: Download rpm package
+  get_url:
+    url: "{{ filebeat_install_rpm_url }}"
+    dest: "{{ filebeat_install_rpm_dest }}"
+    validate_certs: no 
+
+- name: Run rpm installation
+  yum:
+    name: "{{ filebeat_install_rpm_dest }}/filebeat-{{ filebeat_version }}-x86_64.rpm"
+    state: installed

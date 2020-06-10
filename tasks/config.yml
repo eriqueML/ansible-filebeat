@@ -1,0 +1,32 @@
+---
+- name: Ensure filebeat directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    recurse: true
+  loop:
+    - "{{ filebeat_home }}"
+    - "{{ filebeat_config_dir }}"
+    - "{{ filebeat_data_dir }}"
+    - "{{ filebeat_log_dir }}"
+
+- name: Prepare main config file
+  template:
+    src: etc/filebeat/filebeat.yml.j2
+    dest: "{{ filebeat_config_file }}"
+    owner: root
+    group: root
+    mode: 0660
+  notify: Restart filebeat
+
+- name: Prepare systemd file
+  template: 
+    src: etc/systemd/filebeat.service.j2
+    dest: "{{ filebeat_sysd_script }}"
+    mode: 0644
+    force: true
+  notify:
+    - Reload systemd daemon
+    - Restart filebeat

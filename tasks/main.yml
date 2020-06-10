@@ -1,0 +1,6 @@
+---
+- name: Run installation tasks
+  include_tasks: install.yml
+
+- name: Run configuration tasks
+  include_tasks: config.yml 
