@@ -3,4 +3,7 @@
   include_tasks: install.yml
 
 - name: Run configuration tasks
-  include_tasks: config.yml 
+  include_tasks: config.yml
+
+- name: Run systemd tasks
+  include_tasks: start.yml 

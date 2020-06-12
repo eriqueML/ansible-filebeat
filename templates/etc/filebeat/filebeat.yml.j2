@@ -2,18 +2,13 @@
 
 filebeat.inputs:
 
-# Each - is an input. Most options can be set at the input level, so
-# you can use different inputs for various configurations.
-# Below are the input specific configurations.
-
-- type: log
-
-  # Change to true to enable this input configuration.
-  enabled: false
+- type: {{ filebeat_inputs_type }}
+  
+  enabled: {{ filebeat_inputs_enabled }}
 
   # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - /var/log/*.log
+  paths: 
+    - {{ filebeat_inputs_paths }}
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -133,19 +128,27 @@ setup.kibana:
 # Configure what output to use when sending the data collected by the beat.
 
 #-------------------------- Elasticsearch output ------------------------------
+
+{% if filebeat_elasticsearch_output_enabled %}
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["localhost:9200"]
+  hosts: {{ filebeat_elasticsearch_hosts | to_json }}
 
   # Protocol - either `http` (default) or `https`.
-  #protocol: "https"
+  protocol: "{{ filebeat_elasticsearch_url_protocol }}"
 
   # Authentication credentials - either API key or username/password.
-  #api_key: "id:api_key"
-  #username: "elastic"
-  #password: "changeme"
+  {% if filebeat_elasticsearch_apikey %}
+  api_key: "id:api_key"
+  {% endif %}
+  {% if filebeat_elasticsearch_credentials %}
+  username: "{{ filebeat_elasticsearch_username }}"
+  password: "{{ filebeat_elasticsearch_password }}"
+  {% endif %}
+{% endif %}
 
 #----------------------------- Logstash output --------------------------------
+
 {% if filebeat_logstash_output_enabled %}
 output.logstash:
 
@@ -178,6 +181,11 @@ processors:
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
 logging.level: {{ filebeat_logging_level }}
+{% if filebeat_logging_to_files %}
+logging.to_files: {{ filebeat_logging_to_files }}
+{% endif %}
+logging.files: 
+{{ filebeat_logging_files_props | to_nice_yaml(indent=2) | indent(2, true) }}
 
 # At debug level, you can selectively enable logging only for some components.
 # To enable all selectors use ["*"]. Examples of other selectors are "beat",

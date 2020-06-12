@@ -1,0 +1,6 @@
+---
+- name: Add and enable Filebeat service.
+  service:
+    name: filebeat
+    state: "{{ filebeat_service_state }}"
+    enabled: "{{ filebeat_service_enabled }}"

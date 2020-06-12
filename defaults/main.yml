@@ -4,12 +4,7 @@ filebeat_version: 7.7.1
 filebeat_install_rpm_url: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ filebeat_version }}-x86_64.rpm
 filebeat_install_rpm_dest: "/tmp"
 
-# filebeat logstash configuration
-filebeat_logstash_output_enabled: true
-filebeat_logstash_hosts:
-  - "http://{{ inventory_hostname }}:9600"
-
-# filebeat main files, dirs
+# filebeat main files, dirs vars
 filebeat_config_file: "{{ filebeat_config_dir }}/filebeat.yml"
 filebeat_home: "/usr/share/filebeat"
 filebeat_config_dir: "/etc/filebeat"
@@ -17,5 +12,35 @@ filebeat_data_dir: "/var/lib/filebeat"
 filebeat_log_dir: "/var/log/filebeat"
 filebeat_sysd_script: "/etc/systemd/system/filebeat.service"
 
+# filebeat systemd vars
+filebeat_service_state: started
+filebeat_service_enabled: true
+
 # filebeat logging vars
 filebeat_logging_level: debug
+filebeat_logging_to_files: true
+filebeat_logging_files_props:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
+
+# filebeat input vars
+filebeat_inputs_type: log
+filebeat_inputs_enabled: true 
+filebeat_inputs_paths: "/var/log/jenkins.log"
+
+# filebeat output elasticsearch vars
+filebeat_elasticsearch_output_enabled: true
+filebeat_elasticsearch_url_protocol: http
+filebeat_elasticsearch_apikey: false
+filebeat_elasticsearch_credentials: false
+filebeat_elasticsearch_username:
+filebeat_elasticsearch_password: 
+filebeat_elasticsearch_hosts:
+  - "localhost:9200"
+
+# filebeat output logstash configuration
+filebeat_logstash_output_enabled: false
+filebeat_logstash_hosts:
+  - "http://{{ inventory_hostname }}:9600"
