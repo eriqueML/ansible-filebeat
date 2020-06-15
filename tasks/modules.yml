@@ -1,0 +1,5 @@
+---
+- name: Enable modules
+  command: filebeat modules enable "{{ item }}"
+  loop: "{{ filebeat_modules }}"
+  notify: Restart filebeat 

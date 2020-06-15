@@ -21,6 +21,10 @@
     mode: 0640
   notify: Restart filebeat
 
+- name: Run tasks for enabling modules
+  include_tasks: modules.yml 
+  when: filebeat_modules_enabled
+
 - name: Prepare systemd file
   template: 
     src: etc/systemd/filebeat.service.j2

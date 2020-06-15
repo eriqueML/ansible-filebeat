@@ -27,8 +27,9 @@ filebeat_logging_files_props:
 
 # filebeat input vars
 filebeat_inputs_type: log
-filebeat_inputs_enabled: true 
-filebeat_inputs_paths: "/var/log/jenkins.log"
+filebeat_inputs_enabled: false 
+filebeat_inputs_paths: 
+  - "/var/log/jenkins.log"
 
 # filebeat output elasticsearch vars
 filebeat_elasticsearch_output_enabled: true
@@ -40,7 +41,16 @@ filebeat_elasticsearch_password:
 filebeat_elasticsearch_hosts:
   - "localhost:9200"
 
-# filebeat output logstash configuration
+# filebeat output logstash vars
 filebeat_logstash_output_enabled: false
 filebeat_logstash_hosts:
   - "http://{{ inventory_hostname }}:9600"
+
+# filebeat kibana vars
+filebeat_kibana: false
+filebeat_kibana_url: "localhost:5601"
+filebeat_kibana_spaceid: testspace
+
+# filebeat modules vars
+filebeat_modules_enabled: false
+filebeat_modules: []
