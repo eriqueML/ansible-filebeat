@@ -53,4 +53,5 @@ filebeat_kibana_spaceid: testspace
 
 # filebeat modules vars
 filebeat_modules_enabled: false
+filebeat_modules_operation: enable
 filebeat_modules: []
