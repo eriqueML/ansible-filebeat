@@ -31,6 +31,11 @@ filebeat_inputs_enabled: false
 filebeat_inputs_paths: 
   - "/var/log/jenkins.log"
 
+# filebeat output kafka vars
+filebeat_kafka_output_enabled: false
+filebeat_kafka_hosts:
+filebeat_kafka_topic:
+
 # filebeat output elasticsearch vars
 filebeat_elasticsearch_output_enabled: true
 filebeat_elasticsearch_url_protocol: http
