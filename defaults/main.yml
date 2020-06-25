@@ -28,19 +28,20 @@ filebeat_logging_files_props:
 # filebeat input vars
 filebeat_inputs_type: log
 filebeat_inputs_enabled: false 
-filebeat_inputs_paths: 
-  - "/var/log/jenkins.log"
+filebeat_inputs_path: "/var/log/jenkins.log"
 
 # filebeat output kafka vars
 filebeat_kafka_output_enabled: false
 filebeat_kafka_hosts:
-filebeat_kafka_topic:
+  - "localhost:9202"
+  - "localhost:9203"
+  - "localhost:9204"
+filebeat_kafka_topic: test
 
 # filebeat output elasticsearch vars
-filebeat_elasticsearch_output_enabled: true
+filebeat_elasticsearch_output_enabled: false
 filebeat_elasticsearch_url_protocol: http
 filebeat_elasticsearch_apikey: false
-filebeat_elasticsearch_credentials: false
 filebeat_elasticsearch_username:
 filebeat_elasticsearch_password: 
 filebeat_elasticsearch_hosts:
